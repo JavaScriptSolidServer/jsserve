@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * jsserve - Static file server with REST write support
+ * servejs - Static file server with REST write support
  * A drop-in replacement for `npx serve` with PUT/DELETE capabilities
  */
 
@@ -80,7 +80,7 @@ function printBanner(options) {
   const mode = readOnly ? 'GET only (read-only)' : 'GET/PUT/DELETE enabled';
 
   console.log();
-  console.log(chalk.bgCyan.black(' jsserve '));
+  console.log(chalk.bgCyan.black(' servejs '));
   console.log();
   console.log(`  ${chalk.gray('Directory:')}  ${directory}`);
   console.log();
@@ -106,7 +106,7 @@ function printError(message) {
 
 // CLI definition - matching `serve` interface
 program
-  .name('jsserve')
+  .name('servejs')
   .description('Static file server with REST write support')
   .version(pkg.version, '-v, --version')
   .argument('[directory]', 'Directory to serve', '.')
@@ -122,7 +122,7 @@ program
   .option('--ssl-cert <path>', 'Path to SSL certificate')
   .option('--ssl-key <path>', 'Path to SSL private key')
   .option('--no-port-switching', 'Do not open a different port if specified one is taken')
-  // jsserve-specific options
+  // servejs-specific options
   .option('-r, --read-only', 'Disable PUT/DELETE methods (like npx serve)')
   .option('--write', 'Enable PUT/DELETE methods (default)')
   .option('--auth <credentials>', 'Enable basic auth (user:pass)')
@@ -130,11 +130,11 @@ program
   .option('-q, --quiet', 'Suppress all output')
   .addHelpText('after', `
 Examples:
-  $ jsserve                     Serve current directory with read/write
-  $ jsserve ./public            Serve specific directory
-  $ jsserve -p 8080             Use custom port
-  $ jsserve --read-only         Read-only mode (like npx serve)
-  $ jsserve -l 3000 ./dist      Listen on port 3000, serve ./dist
+  $ servejs                     Serve current directory with read/write
+  $ servejs ./public            Serve specific directory
+  $ servejs -p 8080             Use custom port
+  $ servejs --read-only         Read-only mode (like npx serve)
+  $ servejs -l 3000 ./dist      Listen on port 3000, serve ./dist
 
 REST API:
   GET    /file.txt              Read file

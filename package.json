@@ -1,5 +1,5 @@
 {
-  "name": "jsserve",
+  "name": "servejs",
   "version": "0.0.1",
   "description": "Static file server with REST write support - npx serve alternative",
   "keywords": [
@@ -15,7 +15,7 @@
   ],
   "type": "module",
   "bin": {
-    "jsserve": "./bin/jsserve.js"
+    "servejs": "./bin/jsserve.js"
   },
   "files": [
     "bin",
