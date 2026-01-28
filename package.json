@@ -1,0 +1,46 @@
+{
+  "name": "jsserve",
+  "version": "0.0.1",
+  "description": "Static file server with REST write support - npx serve alternative",
+  "keywords": [
+    "serve",
+    "static",
+    "server",
+    "http",
+    "rest",
+    "webdav",
+    "file-server",
+    "development",
+    "solid"
+  ],
+  "type": "module",
+  "bin": {
+    "jsserve": "./bin/jsserve.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "jss-server": "^0.0.81"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavaScriptSolidServer/jsserve.git"
+  },
+  "homepage": "https://github.com/JavaScriptSolidServer/jsserve#readme",
+  "bugs": {
+    "url": "https://github.com/JavaScriptSolidServer/jsserve/issues"
+  },
+  "author": "JavaScriptSolidServer Contributors",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
