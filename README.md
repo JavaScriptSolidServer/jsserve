@@ -1,8 +1,8 @@
-# jsserve
+# servejss
 
 > Static file server with REST write support. A drop-in `npx serve` alternative.
 
-[![npm version](https://img.shields.io/npm/v/jsserve.svg)](https://www.npmjs.com/package/jsserve)
+[![npm version](https://img.shields.io/npm/v/servejss.svg)](https://www.npmjs.com/package/servejss)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Why?
@@ -14,43 +14,43 @@
 - Sync files between devices on your LAN
 - Have a simple WebDAV-like server
 
-**jsserve** is `serve` with superpowers: same simple interface, but you can write too.
+**servejss** is `serve` with superpowers: same simple interface, but you can write too.
 
 ## Install
 
 ```bash
-npm install -g jsserve
+npm install -g servejss
 ```
 
 Or use directly with npx:
 
 ```bash
-npx jsserve
+npx servejss
 ```
 
 ## Usage
 
 ```bash
 # Serve current directory (read + write enabled)
-jsserve
+servejss
 
 # Serve specific directory
-jsserve ./public
+servejss ./public
 
 # Custom port
-jsserve -p 8080
+servejss -p 8080
 
 # Specify port and directory
-jsserve -l 3000 ./dist
+servejss -l 3000 ./dist
 
 # Read-only mode (exactly like npx serve)
-jsserve --read-only
+servejss --read-only
 ```
 
 ## Output
 
 ```
- jsserve
+ servejss
 
   Directory:  /home/user/project
 
@@ -84,7 +84,7 @@ curl -X PUT -H 'If-None-Match: *' -d "New file" http://localhost:3000/new.txt
 ## Options
 
 ```
-Usage: jsserve [options] [directory]
+Usage: servejss [options] [directory]
 
 Options:
   -v, --version            Output version number
@@ -109,7 +109,7 @@ Options:
 
 ## Comparison with serve
 
-| Feature | serve | jsserve |
+| Feature | serve | servejss |
 |---------|-------|---------|
 | Static file serving | ✅ | ✅ |
 | Directory listings | ✅ | ✅ |
@@ -128,7 +128,7 @@ Options:
 
 ### Conditional Requests
 
-jsserve supports ETags for efficient caching and safe concurrent updates:
+servejss supports ETags for efficient caching and safe concurrent updates:
 
 ```bash
 # Get a file with its ETag
@@ -145,10 +145,10 @@ curl -X PUT -H 'If-Match: "a1b2c3"' -d "new content" http://localhost:3000/file.
 
 ### Upgrade to Solid
 
-jsserve is powered by [JSS (JavaScript Solid Server)](https://github.com/JavaScriptSolidServer/JavaScriptSolidServer). Enable full Solid protocol support:
+servejss is powered by [JSS (JavaScript Solid Server)](https://github.com/JavaScriptSolidServer/JavaScriptSolidServer). Enable full Solid protocol support:
 
 ```bash
-jsserve --solid
+servejss --solid
 ```
 
 This enables:
@@ -163,25 +163,25 @@ This enables:
 ```bash
 # Serve your project with write support for uploads
 cd my-project
-jsserve
+servejss
 ```
 
 ### Quick File Sharing on LAN
 ```bash
 # Share files with devices on your network
-jsserve --read-only ~/shared-files
+servejss --read-only ~/shared-files
 ```
 
 ### REST API Testing
 ```bash
 # Mock a simple REST backend
-jsserve ./mock-data
+servejss ./mock-data
 ```
 
 ### WebDAV Alternative
 ```bash
 # Lightweight file sync server
-jsserve --auth user:pass ~/sync
+servejss --auth user:pass ~/sync
 ```
 
 ## License
