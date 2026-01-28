@@ -27,9 +27,8 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
-    "jss-server": "^0.0.81"
+    "javascript-solid-server": "^0.0.83"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JavaScriptSolidServer/jsserve.git"

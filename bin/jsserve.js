@@ -257,7 +257,7 @@ async function run(directory, options) {
   let jssPath;
   try {
     // Try to find jss in node_modules
-    const jssModule = await import.meta.resolve('jss-server/bin/jss.js');
+    const jssModule = await import.meta.resolve('javascript-solid-server/bin/jss.js');
     jssPath = fileURLToPath(jssModule);
   } catch {
     // Fallback to global jss
