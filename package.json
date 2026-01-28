@@ -1,6 +1,6 @@
 {
   "name": "servejss",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Static file server with REST write support - npx serve alternative",
   "keywords": [
     "serve",

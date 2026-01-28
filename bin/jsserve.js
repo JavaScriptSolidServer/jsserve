@@ -130,7 +130,8 @@ program
   .option('--write', 'Enable PUT/DELETE methods (default)')
   .option('--auth <credentials>', 'Enable basic auth (user:pass)')
   .option('--solid', 'Enable full Solid protocol features')
-  .option('--live', 'Enable live reload (auto-refresh browser on file changes)')
+  .option('--live', 'Enable live reload (default: true)')
+  .option('--no-live', 'Disable live reload')
   .option('-q, --quiet', 'Suppress all output')
   .addHelpText('after', `
 Examples:
@@ -241,8 +242,8 @@ async function run(directory, options) {
     jssArgs.push('--conneg');
   }
 
-  // Live reload mode
-  if (options.live) {
+  // Live reload mode (default: enabled)
+  if (options.live !== false) {
     jssArgs.push('--live-reload');
   }
 
@@ -258,7 +259,7 @@ async function run(directory, options) {
       host: options.host,
       directory: dir,
       readOnly: options.readOnly,
-      live: options.live,
+      live: options.live !== false,
       networkAddress: getNetworkAddress(),
     });
   }
