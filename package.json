@@ -1,6 +1,6 @@
 {
   "name": "servejss",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Static file server with REST write support - npx serve alternative",
   "keywords": [
     "serve",
@@ -27,7 +27,7 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
-    "javascript-solid-server": "^0.0.85"
+    "javascript-solid-server": "^0.0.86"
   },
   "repository": {
     "type": "git",
