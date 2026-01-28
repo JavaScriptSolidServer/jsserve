@@ -72,7 +72,7 @@ function getNetworkAddress() {
  * Print the startup banner
  */
 function printBanner(options) {
-  const { port, host, directory, readOnly, networkAddress } = options;
+  const { port, host, directory, readOnly, live, networkAddress } = options;
 
   const local = `http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`;
   const network = networkAddress ? `http://${networkAddress}:${port}` : null;
@@ -90,6 +90,9 @@ function printBanner(options) {
   }
   console.log();
   console.log(`  ${chalk.gray('Mode:')}       ${chalk.yellow(mode)}`);
+  if (live) {
+    console.log(`  ${chalk.gray('Live:')}       ${chalk.green('Watching for changes')}`);
+  }
   console.log();
   console.log(chalk.gray('  Press Ctrl+C to stop'));
   console.log();
@@ -127,6 +130,7 @@ program
   .option('--write', 'Enable PUT/DELETE methods (default)')
   .option('--auth <credentials>', 'Enable basic auth (user:pass)')
   .option('--solid', 'Enable full Solid protocol features')
+  .option('--live', 'Enable live reload (auto-refresh browser on file changes)')
   .option('-q, --quiet', 'Suppress all output')
   .addHelpText('after', `
 Examples:
@@ -237,6 +241,11 @@ async function run(directory, options) {
     jssArgs.push('--conneg');
   }
 
+  // Live reload mode
+  if (options.live) {
+    jssArgs.push('--live-reload');
+  }
+
   // Debug mode
   if (options.debug) {
     console.log(chalk.gray('  JSS args:'), jssArgs.join(' '));
@@ -249,6 +258,7 @@ async function run(directory, options) {
       host: options.host,
       directory: dir,
       readOnly: options.readOnly,
+      live: options.live,
       networkAddress: getNetworkAddress(),
     });
   }
