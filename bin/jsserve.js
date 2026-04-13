@@ -132,6 +132,8 @@ program
   .option('--solid', 'Enable full Solid protocol features')
   .option('--live', 'Enable live reload (default: true)')
   .option('--no-live', 'Disable live reload')
+  .option('--git', 'Enable git HTTP backend (default: true)')
+  .option('--no-git', 'Disable git HTTP backend')
   .option('-q, --quiet', 'Suppress all output')
   .addHelpText('after', `
 Examples:
@@ -245,6 +247,11 @@ async function run(directory, options) {
   // Live reload mode (default: enabled)
   if (options.live !== false) {
     jssArgs.push('--live-reload');
+  }
+
+  // Git HTTP backend (default: enabled)
+  if (options.git !== false) {
+    jssArgs.push('--git');
   }
 
   // Debug mode
