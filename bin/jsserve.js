@@ -72,12 +72,16 @@ function getNetworkAddress() {
  * Print the startup banner
  */
 function printBanner(options) {
-  const { port, host, directory, readOnly, live, networkAddress } = options;
+  const { port, host, directory, readOnly, live, solid, networkAddress } = options;
 
   const local = `http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`;
   const network = networkAddress ? `http://${networkAddress}:${port}` : null;
 
-  const mode = readOnly ? 'GET only (read-only)' : 'GET/PUT/DELETE enabled';
+  const mode = readOnly
+    ? 'GET only (read-only)'
+    : solid
+      ? 'GET/PUT/DELETE enabled (Solid auth)'
+      : 'GET/PUT/DELETE enabled (public, no auth)';
 
   console.log();
   console.log(chalk.bgCyan.black(' servejss '));
@@ -128,7 +132,7 @@ program
   // servejss-specific options
   .option('-r, --read-only', 'Disable PUT/DELETE methods (like npx serve)')
   .option('--write', 'Enable PUT/DELETE methods (default)')
-  .option('--auth <credentials>', 'Enable basic auth (user:pass)')
+  .option('--auth <credentials>', 'Basic auth (user:pass) — not implemented yet, refuses to start')
   .option('--solid', 'Enable full Solid protocol features')
   .option('--live', 'Enable live reload (default: true)')
   .option('--no-live', 'Disable live reload')
@@ -169,6 +173,15 @@ program.parse();
  * Main run function
  */
 async function run(directory, options) {
+  // Neither jsserve nor JSS verifies user:pass credentials yet, so honoring
+  // --auth would silently serve writable files with no auth at all
+  if (options.auth) {
+    throw new Error(
+      '--auth is not implemented yet — refusing to serve without authentication.\n' +
+      '  Use --read-only to disable writes, or --solid for Solid-OIDC/WAC authentication.'
+    );
+  }
+
   // Resolve directory
   const dir = resolve(directory || '.');
 
@@ -214,7 +227,7 @@ async function run(directory, options) {
     '--root', dir,
     '--port', String(port),
     '--host', options.host,
-    '--public',  // Enable open access (requires #107)
+    '--public',  // Open access — skip WAC, unauthenticated read/write
   ];
 
   // Read-only mode
@@ -267,6 +280,7 @@ async function run(directory, options) {
       directory: dir,
       readOnly: options.readOnly,
       live: options.live !== false,
+      solid: options.solid,
       networkAddress: getNetworkAddress(),
     });
   }
