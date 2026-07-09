@@ -28,6 +28,15 @@ Or use directly with npx:
 npx servejss
 ```
 
+servejss requires JSS >= 0.0.211, which never writes `index.html` or `.acl`
+files into the served directory. If the bundled dependency is missing,
+servejss falls back to a globally installed `jss` — if you have an old
+global install, update it too:
+
+```bash
+npm install -g javascript-solid-server@latest
+```
+
 ## Usage
 
 ```bash
