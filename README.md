@@ -101,7 +101,6 @@ Options:
   --ssl-key <path>         Path to SSL private key
   --no-port-switching      Do not open a different port if specified one is taken
   -r, --read-only          Disable PUT/DELETE methods (like npx serve)
-  --auth <credentials>     Enable basic auth (user:pass)
   --solid                  Enable full Solid protocol features
   -q, --quiet              Suppress all output
   -h, --help               Display help
@@ -180,9 +179,15 @@ servejss ./mock-data
 
 ### WebDAV Alternative
 ```bash
-# Lightweight file sync server
-servejss --auth user:pass ~/sync
+# Lightweight file sync server — no auth, trusted networks only
+servejss ~/sync
+
+# Authenticated sync (Solid-OIDC + Web Access Control)
+servejss --solid ~/sync
 ```
+
+> **Note:** basic auth (`--auth user:pass`) is not implemented yet; passing
+> `--auth` refuses to start rather than silently serving unauthenticated.
 
 ## License
 
