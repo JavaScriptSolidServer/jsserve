@@ -16,6 +16,25 @@
 
 **servejss** is `serve` with superpowers: same simple interface, but you can write too.
 
+## How it works
+
+servejss doesn't serve anything itself — it's a thin launcher for
+[JSS](https://github.com/JavaScriptSolidServer/JavaScriptSolidServer).
+It translates `serve`-style flags into a `jss start` invocation, points it
+at your directory in `--public` mode (no auth, WAC skipped), picks a free
+port, prints the banner, and manages the child process. Every request is
+handled by JSS.
+
+In practice that split means:
+
+- **servejss owns** the CLI, the serve-a-directory defaults (public mode,
+  live reload, git backend), port auto-switching, and the startup UX
+- **JSS owns** everything about actual serving: GET/PUT/DELETE handling,
+  ETags and conditional requests, the git HTTP backend, and all Solid
+  protocol features — so issues about request behavior belong upstream
+- `--solid` drops the public default and starts JSS as a full
+  authenticated Solid server (Solid-OIDC + WAC)
+
 ## Install
 
 ```bash
