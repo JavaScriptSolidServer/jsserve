@@ -72,7 +72,7 @@ function getNetworkAddress() {
  * Print the startup banner
  */
 function printBanner(options) {
-  const { port, host, directory, readOnly, live, solid, networkAddress } = options;
+  const { port, host, directory, readOnly, live, solid, plugins, networkAddress } = options;
 
   const local = `http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`;
   const network = networkAddress ? `http://${networkAddress}:${port}` : null;
@@ -94,6 +94,9 @@ function printBanner(options) {
   }
   console.log();
   console.log(`  ${chalk.gray('Mode:')}       ${chalk.yellow(mode)}`);
+  if (plugins && plugins.length) {
+    console.log(`  ${chalk.gray('Plugins:')}    ${chalk.magenta(plugins.join(', '))}`);
+  }
   if (live) {
     console.log(`  ${chalk.gray('Live:')}       ${chalk.green('Watching for changes')}`);
   }
@@ -138,6 +141,7 @@ program
   .option('--no-live', 'Disable live reload')
   .option('--git', 'Enable git HTTP backend (default: true)')
   .option('--no-git', 'Disable git HTTP backend')
+  .option('--plugin <module[@prefix]>', 'Mount a JSS app plugin (repeatable; requires JSS >= 0.0.217)', (value, previous) => previous.concat([value]), [])
   .option('-q, --quiet', 'Suppress all output')
   .addHelpText('after', `
 Examples:
@@ -267,6 +271,11 @@ async function run(directory, options) {
     jssArgs.push('--git');
   }
 
+  // App plugins — forwarded verbatim; JSS owns parsing and loading (#594)
+  for (const plugin of options.plugin) {
+    jssArgs.push('--plugin', plugin);
+  }
+
   // Debug mode
   if (options.debug) {
     console.log(chalk.gray('  JSS args:'), jssArgs.join(' '));
@@ -281,6 +290,7 @@ async function run(directory, options) {
       readOnly: options.readOnly,
       live: options.live !== false,
       solid: options.solid,
+      plugins: options.plugin,
       networkAddress: getNetworkAddress(),
     });
   }
