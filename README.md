@@ -28,8 +28,9 @@ Or use directly with npx:
 npx servejss
 ```
 
-servejss requires JSS >= 0.0.211, which never writes `index.html` or `.acl`
-files into the served directory. If the bundled dependency is missing,
+servejss requires JSS >= 0.0.217, which never writes `index.html` or `.acl`
+files into the served directory and supports `--plugin` app mounting.
+If the bundled dependency is missing,
 servejss falls back to a globally installed `jss` — if you have an old
 global install, update it too:
 
@@ -66,7 +67,7 @@ servejss --read-only
   Local:      http://localhost:3000
   Network:    http://192.168.1.5:3000
 
-  Mode:       GET/PUT/DELETE enabled
+  Mode:       GET/PUT/DELETE enabled (public, no auth)
 
   Press Ctrl+C to stop
 ```
@@ -111,6 +112,7 @@ Options:
   --no-port-switching      Do not open a different port if specified one is taken
   -r, --read-only          Disable PUT/DELETE methods (like npx serve)
   --solid                  Enable full Solid protocol features
+  --plugin <module[@prefix]> Mount a JSS app plugin (repeatable)
   -q, --quiet              Suppress all output
   -h, --help               Display help
 ```
@@ -185,6 +187,16 @@ servejss --read-only ~/shared-files
 # Mock a simple REST backend
 servejss ./mock-data
 ```
+
+### Static Site + Live App
+```bash
+# Serve a directory AND mount a JSS app plugin beside it
+servejss --plugin './chat/plugin.js@/chat' ./public
+```
+
+The plugin value is forwarded verbatim to JSS (`module[@prefix]`, repeatable —
+see the [App Plugins docs](https://github.com/JavaScriptSolidServer/JavaScriptSolidServer/blob/gh-pages/docs/configuration.md#app-plugins-plugins)).
+Quote it: a leading `@` in scoped packages trips up some shells.
 
 ### WebDAV Alternative
 ```bash
